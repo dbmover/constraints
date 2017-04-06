@@ -1,0 +1,13 @@
+{
+    "name": "dbmover/constraints",
+    "description": "Dbmover plugin for dropping all constraints prior to operations",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marijn Ophorst",
+            "email": "marijn@monomelodies.nl"
+        }
+    ],
+    "require": {}
+}
