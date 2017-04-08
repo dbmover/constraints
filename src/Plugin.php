@@ -14,8 +14,6 @@ use PDO;
 
 class Plugin extends Core\Plugin
 {
-    private $foreignKeyConstraints = [];
-
     public function __invoke(string $sql) : string
     {
         $operations = [];
@@ -38,18 +36,11 @@ class Plugin extends Core\Plugin
         }
         if (preg_match_all("@^ALTER TABLE \w+ ADD FOREIGN KEY.*?;@ms", $sql, $matches, PREG_SET_ORDER)) {
             foreach ($matches as $match) {
-                $this->foreignKeyConstraints[] = $match[0];
+                $this->defer($match[0]);
                 $sql = str_replace($match[0], '', $sql);
             }
         }
         return $sql;
-    }
-
-    public function __destruct()
-    {
-        foreach ($this->foreignKeyConstraints as $sql) {
-            $this->loader->addOperation($sql);
-        }
     }
 }
 
