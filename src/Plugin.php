@@ -29,7 +29,7 @@ abstract class Plugin extends Core\Plugin
                 $this->dropConstraint($constraint['tbl'], $constraint['constr'], $constraint['ctype']);
             }
         }
-        if (preg_match_all("@^ALTER TABLE \w+ ADD FOREIGN KEY.*?;@ms", $sql, $matches, PREG_SET_ORDER)) {
+        if (preg_match_all("@^ALTER TABLE \S+ ADD FOREIGN KEY.*?;@ms", $sql, $matches, PREG_SET_ORDER)) {
             foreach ($matches as $match) {
                 $this->defer($match[0]);
                 $sql = str_replace($match[0], '', $sql);
