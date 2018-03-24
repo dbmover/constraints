@@ -14,8 +14,13 @@ use PDO;
 
 abstract class Plugin extends Core\Plugin
 {
+    /** @var string */
     public $description = 'Dropping existing constraints...';
 
+    /**
+     * @param string $sql
+     * @return string
+     */
     public function __invoke(string $sql) : string
     {
         $stmt = $this->loader->getPdo()->prepare(
@@ -38,12 +43,21 @@ abstract class Plugin extends Core\Plugin
         return $sql;
     }
 
+    /**
+     * @return void
+     */
     public function __destruct()
     {
         $this->description = 'Recreating constraints...';
         parent::__destruct();
     }
 
-    protected abstract function dropConstraint(string $table, string $constraint, string $type);
+    /**
+     * @param string $table
+     * @param string $constraint
+     * @param string $type
+     * @return void
+     */
+    protected abstract function dropConstraint(string $table, string $constraint, string $type) : void;
 }
 
